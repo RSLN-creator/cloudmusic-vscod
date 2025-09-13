@@ -1,0 +1,921 @@
+{
+  "name": "cloudmusic",
+  "displayName": "Cloudmusic",
+  "description": "Netease Music for VS Code",
+  "version": "9.22.0",
+  "publisher": "YXL",
+  "private": true,
+  "preview": false,
+  "workspaces": [
+    "packages/*",
+    "packages/@types/*"
+  ],
+  "engines": {
+    "vscode": "^1.67.0"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "categories": [
+    "Other"
+  ],
+  "capabilities": {
+    "virtualWorkspaces": false,
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YXL76/cloudmusic-vscode"
+  },
+  "keywords": [
+    "音乐",
+    "网易云",
+    "网易云音乐",
+    "music",
+    "cloudmusic",
+    "Netease"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "icon": "media/icon-300.png",
+  "main": "./dist/extension.js",
+  "targets": {
+    "main": false
+  },
+  "contributes": {
+    "commands": [
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.dailyCheck",
+        "title": "%commands.dailyCheck.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.seekbackward",
+        "title": "%commands.seekbackward.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.seekforward",
+        "title": "%commands.seekforward.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.previous",
+        "title": "%commands.previous.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.next",
+        "title": "%commands.next.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.toggle",
+        "title": "%commands.toggle.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.repeat",
+        "title": "%commands.repeat.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.like",
+        "title": "%commands.like.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.volume",
+        "title": "%commands.volume.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.speed",
+        "title": "%commands.speed.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.toggleButton",
+        "title": "%commands.toggleButton.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.openLogFile",
+        "title": "%commands.openLogFile.title%"
+      },
+      {
+        "command": "cloudmusic.addAccount",
+        "icon": "$(sign-in)",
+        "title": "%commands.addAccount.title%"
+      },
+      {
+        "category": "Cloudmusic",
+        "command": "cloudmusic.account",
+        "title": "%commands.account.title%"
+      },
+      {
+        "command": "cloudmusic.newLocalLibrary",
+        "icon": "$(add)",
+        "title": "%commands.newLocalLibrary.title%"
+      },
+      {
+        "command": "cloudmusic.refreshLocalLibrary",
+        "icon": "$(refresh)",
+        "title": "%commands.refreshLocalLibrary.title%"
+      },
+      {
+        "command": "cloudmusic.deleteLocalLibrary",
+        "title": "%commands.deleteLocalLibrary.title%"
+      },
+      {
+        "command": "cloudmusic.openLocalLibrary",
+        "title": "%commands.openLocalLibrary.title%"
+      },
+      {
+        "command": "cloudmusic.playLocalLibrary",
+        "icon": "$(play)",
+        "title": "%commands.playLocalLibrary.title%"
+      },
+      {
+        "command": "cloudmusic.addLocalLibrary",
+        "icon": "$(add)",
+        "title": "%commands.addLocalLibrary.title%"
+      },
+      {
+        "command": "cloudmusic.refreshLocalFile",
+        "icon": "$(refresh)",
+        "title": "%commands.refreshLocalFile.title%"
+      },
+      {
+        "command": "cloudmusic.addLocalFile",
+        "icon": "$(add)",
+        "title": "%commands.addLocalFile.title%"
+      },
+      {
+        "command": "cloudmusic.playLocalFile",
+        "icon": "$(play)",
+        "title": "%commands.playLocalFile.title%"
+      },
+      {
+        "command": "cloudmusic.refreshPlaylist",
+        "icon": "$(refresh)",
+        "title": "%commands.refreshPlaylist.title%"
+      },
+      {
+        "command": "cloudmusic.createPlaylist",
+        "icon": "$(add)",
+        "title": "%commands.createPlaylist.title%"
+      },
+      {
+        "command": "cloudmusic.deletePlaylist",
+        "title": "%commands.deletePlaylist.title%"
+      },
+      {
+        "command": "cloudmusic.editPlaylist",
+        "title": "%commands.editPlaylist.title%"
+      },
+      {
+        "command": "cloudmusic.refreshPlaylistContent",
+        "icon": "$(refresh)",
+        "title": "%commands.refreshPlaylistContent.title%"
+      },
+      {
+        "command": "cloudmusic.playPlaylist",
+        "icon": "$(play)",
+        "title": "%commands.playPlaylist.title%"
+      },
+      {
+        "command": "cloudmusic.addPlaylist",
+        "icon": "$(plus)",
+        "title": "%commands.addPlaylist.title%"
+      },
+      {
+        "command": "cloudmusic.deleteFromPlaylist",
+        "title": "%commands.deleteFromPlaylist.title%"
+      },
+      {
+        "command": "cloudmusic.sortQueue",
+        "icon": "$(ungroup-by-ref-type)",
+        "title": "%commands.sortQueue.title%"
+      },
+      {
+        "command": "cloudmusic.clearQueue",
+        "icon": "$(clear-all)",
+        "title": "%commands.clearQueue.title%"
+      },
+      {
+        "command": "cloudmusic.randomQueue",
+        "icon": "$(sort-precedence)",
+        "title": "%commands.randomQueue.title%"
+      },
+      {
+        "command": "cloudmusic.intelligence",
+        "icon": "$(pulse)",
+        "title": "%commands.intelligence.title%"
+      },
+      {
+        "command": "cloudmusic.addSong",
+        "icon": "$(add)",
+        "title": "%commands.addSong.title%"
+      },
+      {
+        "command": "cloudmusic.playSong",
+        "icon": "$(play)",
+        "title": "%commands.playSong.title%"
+      },
+      {
+        "command": "cloudmusic.deleteSong",
+        "icon": "$(remove)",
+        "title": "%commands.deleteSong.title%"
+      },
+      {
+        "command": "cloudmusic.playNext",
+        "icon": "$(arrow-up)",
+        "title": "%commands.playNext.title%"
+      },
+      {
+        "command": "cloudmusic.saveToPlaylist",
+        "title": "%commands.saveToPlaylist.title%"
+      },
+      {
+        "command": "cloudmusic.songDetail",
+        "title": "%commands.songDetail.title%"
+      },
+      {
+        "command": "cloudmusic.playlistDetail",
+        "title": "%commands.playlistDetail.title%"
+      },
+      {
+        "command": "cloudmusic.songComment",
+        "title": "%commands.songComment.title%"
+      },
+      {
+        "command": "cloudmusic.playlistComment",
+        "title": "%commands.playlistComment.title%"
+      },
+      {
+        "command": "cloudmusic.refreshRadio",
+        "icon": "$(refresh)",
+        "title": "%commands.refreshRadio.title%"
+      },
+      {
+        "command": "cloudmusic.refreshRadioContent",
+        "icon": "$(refresh)",
+        "title": "%commands.refreshRadioContent.title%"
+      },
+      {
+        "command": "cloudmusic.playRadio",
+        "icon": "$(play)",
+        "title": "%commands.playRadio.title%"
+      },
+      {
+        "command": "cloudmusic.addRadio",
+        "icon": "$(add)",
+        "title": "%commands.addRadio.title%"
+      },
+      {
+        "command": "cloudmusic.unsubRadio",
+        "title": "%commands.unsubRadio.title%"
+      },
+      {
+        "command": "cloudmusic.radioDetail",
+        "title": "%commands.radioDetail.title%"
+      },
+      {
+        "command": "cloudmusic.addProgram",
+        "icon": "$(add)",
+        "title": "%commands.addProgram.title%"
+      },
+      {
+        "command": "cloudmusic.lyric",
+        "title": "%commands.lyric.title%"
+      },
+      {
+        "command": "cloudmusic.fmTrash",
+        "title": "%commands.fmTrash.title%"
+      },
+      {
+        "command": "cloudmusic.copySongLink",
+        "title": "%commands.copySongLink.title%"
+      },
+      {
+        "command": "cloudmusic.copyPlaylistLink",
+        "title": "%commands.copyPlaylistLink.title%"
+      },
+      {
+        "command": "cloudmusic.copyRadioLink",
+        "title": "%commands.copyRadioLink.title%"
+      },
+      {
+        "command": "cloudmusic.programComment",
+        "title": "%commands.programComment.title%"
+      },
+      {
+        "command": "cloudmusic.copyProgramLink",
+        "title": "%commands.copyProgramLink.title%"
+      },
+      {
+        "command": "cloudmusic.downloadSong",
+        "title": "%commands.downloadSong.title%"
+      },
+      {
+        "command": "cloudmusic.statusBarStyle",
+        "title": "Status Bar Style"
+      }
+    ],
+    "configuration": [
+      {
+        "properties": {
+          "cloudmusic.account.autoCheck": {
+            "default": false,
+            "markdownDescription": "%configuration.account.autoCheck.markdownDescription%",
+            "scope": "window",
+            "type": "boolean"
+          },
+          "cloudmusic.cache.path": {
+            "default": null,
+            "markdownDescription": "%configuration.cache.path.markdownDescription%",
+            "format": "uri",
+            "scope": "window",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cloudmusic.cache.size": {
+            "default": 4096,
+            "markdownDescription": "%configuration.cache.size.markdownDescription%",
+            "maximum": 10240,
+            "minimum": 128,
+            "scope": "window",
+            "type": "number"
+          },
+          "cloudmusic.host.autoStart": {
+            "default": false,
+            "markdownDescription": "%configuration.host.autoStart.markdownDescription%",
+            "scope": "window",
+            "type": "boolean"
+          },
+          "cloudmusic.music.quality": {
+            "default": 192000,
+            "enum": [
+              128000,
+              192000,
+              320000,
+              999000
+            ],
+            "enumDescriptions": [
+              "%configuration.music.quality.enumDescriptions.low%",
+              "%configuration.music.quality.enumDescriptions.medium%",
+              "%configuration.music.quality.enumDescriptions.high%",
+              "%configuration.music.quality.enumDescriptions.lossless%"
+            ],
+            "markdownDescription": "%configuration.music.quality.markdownDescription%",
+            "scope": "window",
+            "type": "number"
+          },
+          "cloudmusic.network.httpsAPI": {
+            "default": true,
+            "scope": "window",
+            "type": "boolean"
+          },
+          "cloudmusic.network.foreignUser": {
+            "default": false,
+            "scope": "window",
+            "type": "boolean"
+          },
+          "cloudmusic.network.proxy": {
+            "default": null,
+            "format": "uri",
+            "scope": "window",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cloudmusic.network.strictSSL": {
+            "default": true,
+            "markdownDescription": "%configuration.network.strictSSL.markdownDescription%",
+            "scope": "window",
+            "type": "boolean"
+          },
+          "cloudmusic.player.mode": {
+            "default": "auto",
+            "enum": [
+              "auto",
+              "native",
+              "wasm"
+            ],
+            "scope": "window",
+            "type": "string"
+          },
+          "cloudmusic.queue.initialization": {
+            "default": "none",
+            "enum": [
+              "none",
+              "recommend",
+              "restore"
+            ],
+            "scope": "window",
+            "type": "string"
+          }
+        },
+        "title": "Cloudmusic"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "cloudmusic.addAccount",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.newLocalLibrary",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.refreshLocalLibrary",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.deleteLocalLibrary",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.openLocalLibrary",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.playLocalLibrary",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.addLocalLibrary",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.refreshLocalFile",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.addLocalFile",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.playLocalFile",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.refreshPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.createPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.deletePlaylist",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.editPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.refreshPlaylistContent",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.playPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.addPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.deleteFromPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.sortQueue",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.clearQueue",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.randomQueue",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.intelligence",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.addSong",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.playSong",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.deleteSong",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.playNext",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.saveToPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.songDetail",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.playlistDetail",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.songComment",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.playlistComment",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.refreshRadio",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.refreshRadioContent",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.playRadio",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.addRadio",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.unsubRadio",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.radioDetail",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.addProgram",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.lyric",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.fmTrash",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.copySongLink",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.copyPlaylistLink",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.copyRadioLink",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.programComment",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.copyProgramLink",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.downloadSong",
+          "when": "false"
+        },
+        {
+          "command": "cloudmusic.statusBarStyle",
+          "when": "false"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "cloudmusic.refreshLocalFile",
+          "group": "inline",
+          "when": "view == cloudmusic-local && viewItem == LocalLibraryTreeItem"
+        },
+        {
+          "command": "cloudmusic.deleteLocalLibrary",
+          "when": "view == cloudmusic-local && viewItem == LocalLibraryTreeItem"
+        },
+        {
+          "command": "cloudmusic.openLocalLibrary",
+          "when": "view == cloudmusic-local && viewItem == LocalLibraryTreeItem"
+        },
+        {
+          "command": "cloudmusic.playLocalLibrary",
+          "group": "inline",
+          "when": "view == cloudmusic-local && viewItem == LocalLibraryTreeItem"
+        },
+        {
+          "command": "cloudmusic.addLocalLibrary",
+          "group": "inline",
+          "when": "view == cloudmusic-local && viewItem == LocalLibraryTreeItem"
+        },
+        {
+          "command": "cloudmusic.addLocalFile",
+          "group": "inline",
+          "when": "view == cloudmusic-local && viewItem == LocalFileTreeItem"
+        },
+        {
+          "command": "cloudmusic.playLocalFile",
+          "group": "inline",
+          "when": "view == cloudmusic-local && viewItem == LocalFileTreeItem"
+        },
+        {
+          "command": "cloudmusic.refreshPlaylist",
+          "group": "inline",
+          "when": "view == cloudmusic-playlist && viewItem == UserTreeItem"
+        },
+        {
+          "command": "cloudmusic.createPlaylist",
+          "group": "inline",
+          "when": "view == cloudmusic-playlist && viewItem == UserTreeItem"
+        },
+        {
+          "command": "cloudmusic.deletePlaylist",
+          "when": "view == cloudmusic-playlist && viewItem == UserTreeItem"
+        },
+        {
+          "command": "cloudmusic.editPlaylist",
+          "when": "view == cloudmusic-playlist && viewItem == UserTreeItem"
+        },
+        {
+          "command": "cloudmusic.refreshPlaylistContent",
+          "group": "inline",
+          "when": "view == cloudmusic-playlist && viewItem == PlaylistItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.playPlaylist",
+          "group": "inline",
+          "when": "view == cloudmusic-playlist && viewItem == PlaylistItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.addPlaylist",
+          "group": "inline",
+          "when": "view == cloudmusic-playlist && viewItem == PlaylistItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.deleteFromPlaylist",
+          "when": "view == cloudmusic-playlist && viewItem == PlaylistItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.addSong",
+          "group": "inline",
+          "when": "view == cloudmusic-playlist && viewItem == QueueItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.intelligence",
+          "group": "inline",
+          "when": "view == cloudmusic-playlist && viewItem == QueueItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.playSong",
+          "group": "inline",
+          "when": "view == cloudmusic-queue && viewItem == QueueItemTreeItem || view == cloudmusic-queue && viewItem == LocalFileTreeItem || view == cloudmusic-queue && viewItem == ProgramTreeItem"
+        },
+        {
+          "command": "cloudmusic.deleteSong",
+          "group": "inline",
+          "when": "view == cloudmusic-queue && viewItem == QueueItemTreeItem || view == cloudmusic-queue && viewItem == LocalFileTreeItem || view == cloudmusic-queue && viewItem == ProgramTreeItem"
+        },
+        {
+          "command": "cloudmusic.playNext",
+          "group": "inline",
+          "when": "viewItem == QueueItemTreeItem || viewItem == LocalFileTreeItem || viewItem == ProgramTreeItem"
+        },
+        {
+          "command": "cloudmusic.saveToPlaylist",
+          "when": "viewItem == QueueItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.playlistDetail",
+          "when": "viewItem == PlaylistItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.songComment",
+          "when": "viewItem == QueueItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.playlistComment",
+          "when": "viewItem == PlaylistItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.copySongLink",
+          "when": "viewItem == QueueItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.copyPlaylistLink",
+          "when": "viewItem == PlaylistItemTreeItem"
+        },
+        {
+          "command": "cloudmusic.copyRadioLink",
+          "when": "viewItem == RadioTreeItem"
+        },
+        {
+          "command": "cloudmusic.programComment",
+          "when": "viewItem == ProgramTreeItem"
+        },
+        {
+          "command": "cloudmusic.copyProgramLink",
+          "when": "viewItem == ProgramTreeItem"
+        },
+        {
+          "command": "cloudmusic.downloadSong",
+          "when": "viewItem == QueueItemTreeItem || viewItem == ProgramTreeItem"
+        },
+        {
+          "command": "cloudmusic.refreshRadioContent",
+          "group": "inline",
+          "when": "view == cloudmusic-radio && viewItem == RadioTreeItem"
+        },
+        {
+          "command": "cloudmusic.playRadio",
+          "group": "inline",
+          "when": "view == cloudmusic-radio && viewItem == RadioTreeItem"
+        },
+        {
+          "command": "cloudmusic.addRadio",
+          "group": "inline",
+          "when": "view == cloudmusic-radio && viewItem == RadioTreeItem"
+        },
+        {
+          "command": "cloudmusic.unsubRadio",
+          "when": "view == cloudmusic-radio && viewItem == RadioTreeItem"
+        },
+        {
+          "command": "cloudmusic.radioDetail",
+          "when": "view == cloudmusic-radio && viewItem == RadioTreeItem"
+        },
+        {
+          "command": "cloudmusic.addProgram",
+          "group": "inline",
+          "when": "view == cloudmusic-radio && viewItem == ProgramTreeItem"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "cloudmusic.addAccount",
+          "group": "navigation",
+          "when": "view == cloudmusic-account"
+        },
+        {
+          "command": "cloudmusic.newLocalLibrary",
+          "group": "navigation",
+          "when": "view == cloudmusic-local"
+        },
+        {
+          "command": "cloudmusic.refreshLocalLibrary",
+          "group": "navigation",
+          "when": "view == cloudmusic-local"
+        },
+        {
+          "command": "cloudmusic.refreshRadio",
+          "group": "navigation",
+          "when": "view == cloudmusic-radio"
+        },
+        {
+          "command": "cloudmusic.sortQueue",
+          "group": "navigation",
+          "when": "view == cloudmusic-queue"
+        },
+        {
+          "command": "cloudmusic.clearQueue",
+          "group": "navigation",
+          "when": "view == cloudmusic-queue"
+        },
+        {
+          "command": "cloudmusic.randomQueue",
+          "group": "navigation",
+          "when": "view == cloudmusic-queue"
+        }
+      ]
+    },
+    "views": {
+      "cloudmusic": [
+        {
+          "id": "cloudmusic-account",
+          "name": "%views.cloudmusic-account.name%",
+          "type": "webview"
+        },
+        {
+          "id": "cloudmusic-local",
+          "name": "%views.cloudmusic-local.name%"
+        },
+        {
+          "id": "cloudmusic-playlist",
+          "name": "%views.cloudmusic-playlist.name%"
+        },
+        {
+          "id": "cloudmusic-radio",
+          "name": "%views.cloudmusic-radio.name%"
+        },
+        {
+          "id": "cloudmusic-queue",
+          "name": "%views.cloudmusic-queue.name%"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "icon": "media/disc.svg",
+          "id": "cloudmusic",
+          "title": "%viewsContainers.activitybar.title%"
+        }
+      ]
+    },
+    "walkthroughs": [
+      {
+        "id": "cloudmusic",
+        "title": "Cloudmusic",
+        "description": "Netease Music for VS Code",
+        "steps": [
+          {
+            "id": "statusBar",
+            "title": "Status Bar",
+            "description": "This step will help you set up status bar.",
+            "media": {
+              "markdown": "media/walkthroughs/statusBar.md"
+            }
+          },
+          {
+            "id": "queue",
+            "title": "Queue",
+            "description": "This step will help you know how to use queue.",
+            "media": {
+              "markdown": "media/walkthroughs/queue.md"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "resolutions": {
+    "@types/node": "16.18.8",
+    "buffer": "latest",
+    "buffer-from": "latest",
+    "debug": "latest",
+    "isarray": "latest",
+    "loose-envify": "latest",
+    "object-assign": "latest"
+  },
+  "scripts": {
+    "build": "deno run --allow-all scripts/build.mts --prod",
+    "build-dev": "deno run --allow-all scripts/build.mts",
+    "check": "yarn workspaces foreach --all -p run check",
+    "generate-css": "NODE_ENV=production yarn tailwindcss --config tailwind.config.cjs --no-autoprefixer --minify -o dist/style.css",
+    "lint": "yarn workspaces foreach --all -p run lint",
+    "publish": "deno run --allow-all scripts/publish.mts"
+  },
+  "devDependencies": {
+    "@types/eslint": "8.56.10",
+    "@types/http-cache-semantics": "4.0.4",
+    "@typescript-eslint/eslint-plugin": "7.11.0",
+    "@typescript-eslint/parser": "7.11.0",
+    "debug": "4.3.4",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "8.10.0",
+    "eslint-plugin-prettier": "5.1.3",
+    "eslint-plugin-react": "7.34.2",
+    "eslint-plugin-react-hooks": "4.6.2",
+    "postcss": "8.4.38",
+    "prettier": "3.2.5",
+    "supports-color": "9.4.0",
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.5"
+  },
+  "packageManager": "yarn@4.2.2"
+}
