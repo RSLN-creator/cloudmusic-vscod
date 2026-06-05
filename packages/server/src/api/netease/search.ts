@@ -9,7 +9,7 @@ export async function searchDefault(uid: number): Promise<string> {
   const value = API_CACHE.get<string>(key);
   if (value) return value;
   const res = await eapiRequest<{ data: { realkeyword: string } }>(
-    "interface3.music.163.com/eapi/search/defaultkeyword/get",
+    "interface.music.163.com/eapi/search/defaultkeyword/get",
     {},
     "/api/search/defaultkeyword/get",
     ACCOUNT_STATE.cookies.get(uid),

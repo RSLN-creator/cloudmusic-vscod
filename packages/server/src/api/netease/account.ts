@@ -26,7 +26,7 @@ export async function countriesCodeList(): Promise<CountryList> {
 
   const res = await eapiRequest<{
     data: { countryList: CountryList; label: string }[];
-  }>("interface3.music.163.com/eapi/lbs/countries/v1", {}, "/api/lbs/countries/v1");
+  }>("interface.music.163.com/eapi/lbs/countries/v1", {}, "/api/lbs/countries/v1");
   if (!res || !res.data) {
     return [
       { zh: "中国", en: "China", locale: "CN", code: "86" },
@@ -105,7 +105,7 @@ export async function likelist(uid: number): Promise<readonly number[]> {
 }
 
 export function login(username: string, password: string): Promise<NeteaseTypings.Profile | void> {
-  return loginRequest("interface3.music.163.com/eapi/w/login", {
+  return loginRequest("interface.music.163.com/eapi/w/login", {
     username,
     password,
     rememberLogin: true,
@@ -121,7 +121,7 @@ export function loginCellphone(
   password: string,
   captcha: string,
 ): Promise<NeteaseTypings.Profile | void> {
-  return loginRequest("interface3.music.163.com/eapi/w/login/cellphone", {
+  return loginRequest("interface.music.163.com/eapi/w/login/cellphone", {
     phone,
     countrycode,
     rememberLogin: true,
@@ -133,20 +133,20 @@ export function loginCellphone(
 }
 
 export function loginQrCheck(key: string) {
-  return qrloginRequest("interface3.music.163.com/eapi/login/qrcode/client/login", { key, type: 3 }, "/api/login/qrcode/client/login");
+  return qrloginRequest("interface.music.163.com/eapi/login/qrcode/client/login", { key, type: 3 }, "/api/login/qrcode/client/login");
 }
 
 export async function loginQrKey(): Promise<string | void> {
-  const res = await eapiRequest<{ unikey: string }>("interface3.music.163.com/eapi/login/qrcode/unikey", { type: 3 }, "/api/login/qrcode/unikey");
+  const res = await eapiRequest<{ unikey: string }>("interface.music.163.com/eapi/login/qrcode/unikey", { type: 3 }, "/api/login/qrcode/unikey");
   if (!res) return;
   return res.unikey;
 }
 
 export async function loginRefresh(cookieStr: string): Promise<string | void> {
   const cookie = CookieJar.deserializeSync(cookieStr);
-  const res = await eapiRequest("interface3.music.163.com/eapi/login/token/refresh", {}, "/api/login/token/refresh", cookie);
+  const res = await eapiRequest("interface.music.163.com/eapi/login/token/refresh", {}, "/api/login/token/refresh", cookie);
   if (!res || !res.cookie) return;
-  if (res.cookie) for (const c of res.cookie) cookie.setCookieSync(c, "http://interface3.music.163.com/eapi/login/token/refresh");
+  if (res.cookie) for (const c of res.cookie) cookie.setCookieSync(c, "http://interface.music.163.com/eapi/login/token/refresh");
   return JSON.stringify(cookie.serializeSync());
 }
 
@@ -154,10 +154,10 @@ export async function loginStatus(cookieStr: string): Promise<boolean> {
   const cookie = CookieJar.deserializeSync(cookieStr);
   const res = await eapiRequest<{
     readonly profile: NeteaseTypings.Profile;
-  }>("interface3.music.163.com/eapi/nuser/account/get", {}, "/api/nuser/account/get", cookie);
+  }>("interface.music.163.com/eapi/nuser/account/get", {}, "/api/nuser/account/get", cookie);
   if (!res) return false;
   if (res.cookie) {
-    const url = `${API_CONFIG.protocol}://interface3.music.163.com/eapi/nuser/account/get`;
+    const url = `${API_CONFIG.protocol}://interface.music.163.com/eapi/nuser/account/get`;
     for (const c of res.cookie) cookie.setCookieSync(c, url);
   }
   const { profile } = res;
@@ -167,8 +167,31 @@ export async function loginStatus(cookieStr: string): Promise<boolean> {
   return true;
 }
 
+export async function cookieLogin(musicU: string): Promise<NeteaseTypings.Profile | null> {
+  const cookie = new CookieJar();
+  for (const domain of ["https://music.163.com", "https://interface.music.163.com"]) {
+    cookie.setCookieSync(`MUSIC_U=${musicU}`, domain);
+    cookie.setCookieSync("__remember_me=true", domain);
+  }
+  ACCOUNT_STATE.setStaticCookie(cookie);
+  const res = await eapiRequest<{
+    readonly profile: NeteaseTypings.Profile;
+  }>("interface.music.163.com/eapi/nuser/account/get", {}, "/api/nuser/account/get", cookie);
+  if (!res) return null;
+  if (res.cookie) {
+    const url = `${API_CONFIG.protocol}://interface.music.163.com/eapi/nuser/account/get`;
+    for (const c of res.cookie) cookie.setCookieSync(c, url);
+  }
+  const { profile } = res;
+  if (!profile) return null;
+  ACCOUNT_STATE.cookies.set(profile.userId, cookie);
+  ACCOUNT_STATE.profile.set(profile.userId, profile);
+  broadcastProfiles();
+  return profile;
+}
+
 export async function logout(uid: number): Promise<boolean> {
-  const res = await eapiRequest("interface3.music.163.com/eapi/logout", {}, "/api/logout", ACCOUNT_STATE.cookies.get(uid));
+  const res = await eapiRequest("interface.music.163.com/eapi/logout", {}, "/api/logout", ACCOUNT_STATE.cookies.get(uid));
   if (!res) return false;
   ACCOUNT_STATE.cookies.delete(uid);
   ACCOUNT_STATE.profile.delete(uid);

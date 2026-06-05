@@ -61,7 +61,7 @@ export async function lyric(id: number): Promise<NeteaseTypings.LyricData> {
     lyricUser?: NeteaseTypings.LyricUser;
     transUser?: NeteaseTypings.LyricUser;
   }>(
-    "interface3.music.163.com/eapi/song/lyric/v1",
+    "interface.music.163.com/eapi/song/lyric/v1",
     {
       id,
       cp: false,

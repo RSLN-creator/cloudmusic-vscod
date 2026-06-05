@@ -149,6 +149,7 @@ export class AccountManager {
       phone,
       captcha,
       qrcode,
+      cookie,
     }
 
     await MultiStepInput.run(async (input) => {
@@ -165,6 +166,7 @@ export class AccountManager {
           },
           { label: `$(code) ${i18n.word.captcha}`, description: i18n.sentence.label.captcha, type: Type.captcha },
           { label: `$(diff) ${i18n.word.qrcode}`, description: i18n.sentence.label.qrcode, type: Type.qrcode },
+          { label: `$(key) ${i18n.word.cookie}`, description: i18n.sentence.label.cookie, type: Type.cookie },
         ],
         placeholder: i18n.sentence.hint.signIn,
       });
@@ -188,6 +190,10 @@ export class AccountManager {
           return (input) => inputCountrycode(input);
         case Type.qrcode:
           void Webview.login();
+          return;
+        case Type.cookie:
+          totalSteps = 2;
+          return (input) => inputCookie(input);
       }
       return;
     });
@@ -250,6 +256,22 @@ export class AccountManager {
         prompt: i18n.sentence.hint.captcha,
       });
       if (await AccountManager.login(state)) void window.showInformationMessage(i18n.sentence.success.signIn);
+    }
+
+    async function inputCookie(input: MultiStepInput) {
+      const musicU = await input.showInputBox({
+        title,
+        step: 2,
+        totalSteps: 2,
+        prompt: i18n.sentence.hint.cookie,
+      });
+      if (!musicU.trim()) return;
+      const res = await IPC.netease("cookieLogin", [musicU.trim()]);
+      if (res) {
+        void window.showInformationMessage(i18n.sentence.success.signIn);
+      } else {
+        void window.showErrorMessage(i18n.sentence.fail.signIn);
+      }
     }
   }
 
