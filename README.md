@@ -17,6 +17,40 @@
 
 </div>
 
+## 本仓库修改说明
+
+本仓库基于 [yxl76/cloudmusic-vscode](https://github.com/yxl76/cloudmusic-vscode) 修改，主要解决网易云音乐新风控导致的登录失败问题。
+
+### 修改内容
+
+1. **登录 API 从 weapi 迁移到 eapi**：原有登录接口使用 `weapi` 加密方式，容易被网易云新风控拦截。已将所有登录相关接口迁移到 `eapi` 加密方式，降低被风控的概率。
+
+2. **API 域名更新**：将 `interface3.music.163.com` 统一替换为 `interface.music.163.com`，适配网易云最新的 API 域名。
+
+3. **新增 Cookie Login 登录方式**：在原有邮箱、手机、验证码、二维码登录方式之外，新增 Cookie 登录方式。用户可以在浏览器中登录网易云音乐后，将 `MUSIC_U` Cookie 值手动导入插件，完全绕过 API 风控。
+
+4. **appver 更新**：将客户端版本号从旧版更新为 `9.2.30`，模拟最新客户端请求。
+
+### Cookie Login 使用方法
+
+1. 在浏览器中访问 [music.163.com](https://music.163.com) 并登录
+2. 打开浏览器开发者工具（F12）→ Application → Cookies
+3. 找到 `music.163.com` 域名下的 `MUSIC_U` Cookie，复制其值
+4. 在 VS Code 中打开命令面板（Ctrl+Shift+P），搜索 "CloudMusic: Sign in"
+5. 选择 "Cookie" 登录方式，粘贴 `MUSIC_U` 的值即可
+
+### 安装修改版插件
+
+从 [GitHub Releases](https://github.com/RSLN-creator/cloudmusic-vscod/releases) 下载对应平台的 `.vsix` 文件，然后：
+
+```bash
+code --install-extension cloudmusic-9.22.0.vsix
+```
+
+或者手动替换：下载 Release 中的 `dist` 压缩包，解压覆盖到 VS Code 扩展目录下的 `dist` 文件夹即可。
+
+---
+
 ## Table of contents
 
 - [Table of contents](#table-of-contents)
@@ -90,25 +124,3 @@
 - [neon](https://github.com/neon-bindings/neon)
 - [rodio](https://github.com/RustAudio/rodio)
 - [UnblockNeteaseMusic](https://github.com/nondanee/UnblockNeteaseMusic)
-
-## 本仓库修改说明
-
-本仓库基于 [yxl76/cloudmusic-vscode](https://github.com/yxl76/cloudmusic-vscode) 修改，主要解决网易云音乐新风控导致的登录失败问题。
-
-### 修改内容
-
-1. **登录 API 从 weapi 迁移到 eapi**：原有登录接口使用 `weapi` 加密方式，容易被网易云新风控拦截。已将所有登录相关接口迁移到 `eapi` 加密方式，降低被风控的概率。
-
-2. **API 域名更新**：将 `interface3.music.163.com` 统一替换为 `interface.music.163.com`，适配网易云最新的 API 域名。
-
-3. **新增 Cookie Login 登录方式**：在原有邮箱、手机、验证码、二维码登录方式之外，新增 Cookie 登录方式。用户可以在浏览器中登录网易云音乐后，将 `MUSIC_U` Cookie 值手动导入插件，完全绕过 API 风控。
-
-4. **appver 更新**：将客户端版本号从旧版更新为 `9.2.30`，模拟最新客户端请求。
-
-### Cookie Login 使用方法
-
-1. 在浏览器中访问 [music.163.com](https://music.163.com) 并登录
-2. 打开浏览器开发者工具（F12）→ Application → Cookies
-3. 找到 `music.163.com` 域名下的 `MUSIC_U` Cookie，复制其值
-4. 在 VS Code 中打开命令面板（Ctrl+Shift+P），搜索 "CloudMusic: Sign in"
-5. 选择 "Cookie" 登录方式，粘贴 `MUSIC_U` 的值即可
