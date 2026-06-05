@@ -49,16 +49,16 @@ export const generateHeader = (cookie: NeteaseTypings.Cookie | Cookie[]) => {
     const os = cookie.find((c) => c.key === "os")?.value;
     if (!os) cookie.push(new Cookie({ key: "os", value: "ios" }));
     const appver = cookie.find((c) => c.key === "appver")?.value;
-    if (!appver) cookie.push(new Cookie({ key: "appver", value: "9.0.95" }));
+    if (!appver) cookie.push(new Cookie({ key: "appver", value: "9.2.30" }));
     header["Cookie"] = cookie
       .sort(cookieCompare)
       .map((c) => c.cookieString())
       .join("; ");
     header["os"] = os ?? "ios";
-    header["appver"] = appver ?? "9.0.95";
+    header["appver"] = appver ?? "9.2.30";
   } else {
     cookie.os ??= "ios";
-    cookie.appver ??= "9.0.95";
+    cookie.appver ??= "9.2.30";
     header["Cookie"] = jsonToCookie(cookie);
     header["os"] = cookie.os;
     header["appver"] = cookie.appver;
@@ -81,11 +81,31 @@ const responseHandler = async <T>(
   return res.body;
 };
 
-export const loginRequest = async (url: string, data: QueryInput): Promise<NeteaseTypings.Profile | void> => {
+export const loginRequest = async (url: string, data: NodeJS.Dict<string | number | boolean | Headers>, encryptUrl: string): Promise<NeteaseTypings.Profile | void> => {
   url = `${API_CONFIG.protocol}://${url}`;
-  const headers = generateHeader({ os: "ios", appver: "9.0.95" });
+  const now = Date.now();
+  const header: Headers = {
+    osver: "17.4.1",
+    deviceId: "",
+    appver: "9.2.30",
+    versioncode: "920",
+    mobilename: "",
+    buildver: now.toString().slice(0, 10),
+    resolution: "1920x1080",
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    __csrf: "",
+    os: "android",
+    channel: "",
+    requestId: `${now}_${Math.floor(Math.random() * 1000)
+      .toString()
+      .padStart(4, "0")}`,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    MUSIC_U: "",
+  };
+  const headers = generateHeader(header);
+  data.header = header;
   const res = await client<{ readonly code?: number; profile?: NeteaseTypings.Profile }>(url, {
-    form: weapi(data),
+    form: eapi(encryptUrl, data),
     headers,
   });
 
@@ -109,10 +129,30 @@ export const loginRequest = async (url: string, data: QueryInput): Promise<Netea
 type QRCheckRes =
   | { readonly code: number; readonly message: string }
   | { readonly code: 802; readonly message: string; readonly nickname: string; readonly avatarUrl: string };
-export const qrloginRequest = async (url: string, data: QueryInput): Promise<QRCheckRes> => {
+export const qrloginRequest = async (url: string, data: NodeJS.Dict<string | number | boolean | Headers>, encryptUrl: string): Promise<QRCheckRes> => {
   url = `${API_CONFIG.protocol}://${url}`;
-  const headers = generateHeader({});
-  const res = await client<{ readonly code: number; readonly message: string }>(url, { form: weapi(data), headers });
+  const now = Date.now();
+  const header: Headers = {
+    osver: "17.4.1",
+    deviceId: "",
+    appver: "9.2.30",
+    versioncode: "920",
+    mobilename: "",
+    buildver: now.toString().slice(0, 10),
+    resolution: "1920x1080",
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    __csrf: "",
+    os: "android",
+    channel: "",
+    requestId: `${now}_${Math.floor(Math.random() * 1000)
+      .toString()
+      .padStart(4, "0")}`,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    MUSIC_U: "",
+  };
+  const headers = generateHeader(header);
+  data.header = header;
+  const res = await client<{ readonly code: number; readonly message: string }>(url, { form: eapi(encryptUrl, data), headers });
   if (!res) throw Error("QR Code login error!");
   const status = res.body.code || res.statusCode;
   if (status === 800 || status === 801 || status === 802) return res.body;
@@ -157,8 +197,8 @@ export const eapiRequest = async <T = QueryInput>(
   const header: Headers = {
     osver: cookieJSON["osver"] || "17.4.1",
     deviceId: cookieJSON["deviceId"] || "",
-    appver: cookieJSON["appver"] || "9.0.95",
-    versioncode: cookieJSON["versioncode"] || "140",
+    appver: cookieJSON["appver"] || "9.2.30",
+    versioncode: cookieJSON["versioncode"] || "920",
     mobilename: cookieJSON["mobilename"] || "",
     buildver: cookieJSON["buildver"] || now.toString().slice(0, 10),
     resolution: cookieJSON["resolution"] || "1920x1080",

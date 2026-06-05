@@ -30,7 +30,7 @@ class AccountState {
       "http://music.163.com/weapi/playlist/manipulate/tracks",
     ]) {
       cookie.setCookieSync("os=pc", url);
-      cookie.setCookieSync("appver=2.9.7", url);
+      cookie.setCookieSync("appver=2.10.5", url);
     }
     for (const url of [
       "http://music.163.com/weapi/resource/comments/add/",
